@@ -1,8 +1,10 @@
 package com.springmongodb.springmongodb.resources;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.springmongodb.springmongodb.domain.User;
+import com.springmongodb.springmongodb.dto.UserDto;
 import com.springmongodb.springmongodb.services.UserServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,9 @@ public class UserResource {
     private UserServices service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserDto>> findAll() {
         List<User> users = service.findAll();
-        return ResponseEntity.ok().body(users);
+        List<UserDto> usersDto = users.stream().map(x -> new UserDto(x)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(usersDto);
     }
 }

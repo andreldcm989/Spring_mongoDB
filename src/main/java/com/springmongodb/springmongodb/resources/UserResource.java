@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.springmongodb.springmongodb.domain.Post;
 import com.springmongodb.springmongodb.domain.User;
 import com.springmongodb.springmongodb.dto.UserDto;
 import com.springmongodb.springmongodb.services.UserService;
@@ -40,6 +41,12 @@ public class UserResource {
         return ResponseEntity.ok().body(new UserDto(obj));
     }
 
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
+    }
+
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody UserDto objDto) {
         User obj = service.fromDto(objDto);
@@ -61,4 +68,7 @@ public class UserResource {
         service.update(obj);
         return ResponseEntity.noContent().build();
     }
+
+    
+
 }

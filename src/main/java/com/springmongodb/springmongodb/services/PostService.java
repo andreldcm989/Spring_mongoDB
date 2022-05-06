@@ -1,5 +1,6 @@
 package com.springmongodb.springmongodb.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.springmongodb.springmongodb.domain.Post;
@@ -20,4 +21,7 @@ public class PostService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
 
+    public List<Post> findByTitle(String text){
+        return repository.findByTitleContainingIgnoreCase(text);
+    }
 }

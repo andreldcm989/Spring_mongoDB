@@ -6,6 +6,7 @@ import java.util.TimeZone;
 
 import com.springmongodb.springmongodb.domain.Post;
 import com.springmongodb.springmongodb.domain.User;
+import com.springmongodb.springmongodb.dto.AuthorDto;
 import com.springmongodb.springmongodb.repository.PostRepository;
 import com.springmongodb.springmongodb.repository.UserRepository;
 
@@ -33,11 +34,13 @@ public class instantiation implements CommandLineRunner {
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
-
-        Post p1 = new Post(null, sdf.parse("21/03/2018"), "Partil viagem", "Vou viajar para São Paulo! Abs", maria);
-        Post p2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia!", "Acordei feliz hoje", maria);
-
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+        
+        Post p1 = 
+            new Post(null, sdf.parse("21/03/2018"), "Partil viagem", "Vou viajar para São Paulo! Abs", new AuthorDto(maria));
+        Post p2 = 
+            new Post(null, sdf.parse("23/03/2018"), "Bom dia!", "Acordei feliz hoje", new AuthorDto(maria));
+
         postRepository.saveAll(Arrays.asList(p1, p2));
 
     }
